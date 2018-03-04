@@ -1,0 +1,225 @@
+import org.yaml.snakeyaml.Yaml
+
+buildscript {
+    ext.kotlin_version = '1.2.30'
+    repositories {
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath 'org.yaml:snakeyaml:1.19'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'groovy'
+    id 'eclipse'
+    id 'idea'
+    id "com.github.ethankhall.semantic-versioning" version "1.1.0"
+    id "com.github.ben-manes.versions" version "0.13.0"
+    id "org.asciidoctor.convert" version "1.5.3"
+    id "org.ajoberstar.git-publish" version "0.3.2"
+    id "com.github.hierynomus.license" version "0.12.1"
+    id "net.saliman.properties" version "1.4.6"
+    id 'com.github.jk1.dependency-license-report' version '0.3.8'
+}
+
+apply plugin: 'kotlin'
+
+project.version.with {
+    major = boothubTemplateSimpleKotlinVersionMajor as int
+    minor= boothubTemplateSimpleKotlinVersionMinor as int
+    patch = boothubTemplateSimpleKotlinVersionPatch as int
+    if (project.hasProperty('boothubTemplateSimpleKotlinVersionLabel')) {
+        preRelease = boothubTemplateSimpleKotlinVersionLabel
+    }
+    releaseBuild = Boolean.valueOf(boothubTemplateSimpleKotlinReleaseBuild)
+}
+ext.boothubTemplateSimpleKotlinVersion = project.version as String
+ext.boothubTemplateSimpleKotlinTag = Boolean.valueOf(boothubTemplateSimpleKotlinReleaseBuild) ? "v$ext.boothubTemplateSimpleKotlinVersion" : 'master'
+
+def pomConfig = {
+    url "https://github.com/boothub-org/boothub-template-simple-kotlin"
+    developers {
+    }
+    scm {
+        connection "https://github.com/boothub-org/boothub-template-simple-kotlin.git"
+        developerConnection "https://github.com/boothub-org/boothub-template-simple-kotlin.git"
+        url "https://github.com/boothub-org/boothub-template-simple-kotlin"
+    }
+}
+
+ext.groovyVersion = '2.4.12'
+
+version = boothubTemplateSimpleKotlinVersion
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+sourceCompatibility = 1.8
+
+def defaultEncoding = 'UTF-8'
+[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+
+[compileGroovy, compileTestGroovy]*.options*.encoding = defaultEncoding
+[compileGroovy, compileTestGroovy]*.groovyOptions*.encoding = defaultEncoding
+
+sourceSets.main.java.srcDirs = []
+sourceSets.main.groovy.srcDirs = ["src/main/java", "src/main/groovy"]
+sourceSets.test.resources.srcDirs += 'skeleton'
+
+configurations {
+    compile { transitive = true }
+}
+
+license {
+    header rootProject.file("license-header.txt")
+    skipExistingHeaders true
+    ignoreFailures false
+    excludes(["**/*.zip", "**/*.yml", "**/*.properties", 'template/**'])
+}
+
+dependencies {
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.21'
+
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+        exclude module: 'groovy-all'
+    }
+    testCompile 'cglib:cglib-nodep:3.2.4'
+    testCompile 'org.objenesis:objenesis:2.4'
+    testCompile('com.athaydes:spock-reports:1.2.13') { transitive = false }
+
+    testCompile('ch.qos.logback:logback-classic:1.1.7')
+
+    testCompile("org.boothub:boothub-core:$boothubVersion")
+    testCompile("org.boothub:boothub-gradle-test:$boothubVersion")
+    testCompile gradleTestKit()
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': "${project.archivesBaseName}",
+                'Implementation-Version': boothubTemplateSimpleKotlinVersion
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives(sourcesJar)
+}
+
+task "create-dirs" {
+    doLast {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.groovy.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+}
+
+eclipse {
+    classpath {
+        file {
+            whenMerged {
+                def jre = entries.find { it.path.contains 'org.eclipse.jdt.launching.JRE_CONTAINER' }
+                jre.accessRules.add(new org.gradle.plugins.ide.eclipse.model.AccessRule('0', 'javafx/**'))
+            }
+        }
+    }
+    project {
+        file.beforeMerged { project ->
+            project.natures.clear()
+        }
+    }
+}
+
+asciidoctor {
+    sourceDir = file("doc")
+    sources { include 'index.adoc' }
+    logDocuments = true
+    attributes 'source-highlighter': 'coderay',
+            'coderay-linenums-mode': 'table',
+            icons: 'font',
+            imagesdir: 'img',
+            'data-uri': '',
+            linkattrs: true,
+            linkcss: true,
+            'git-tag': boothubTemplateSimpleKotlinTag,
+    'blob-root-master': "https://github.com/boothub-org/boothub-template-simple-kotlin/blob/master",
+    'blob-root': "https://github.com/boothub-org/boothub-template-simple-kotlin/blob/$boothubTemplateSimpleKotlinTag"
+}
+
+gitPublish {
+    System.properties['org.ajoberstar.grgit.auth.username'] = System.getenv('GH_PAGES_ACCESS_TOKEN') ?: ''
+    System.properties['org.ajoberstar.grgit.auth.password'] = ''
+
+    repoUri = 'https://github.com/boothub-org/boothub-template-simple-kotlin.git'
+    branch = 'gh-pages'
+
+    contents {
+        def pgType = project.hasProperty('ghPageType') ? ghPageType : 'latest'
+        if (pgType == 'init') {
+            from file("ghpages")
+        } else if (pgType == 'list') {
+            from file("build/release-list")
+        } else {
+            from file("${asciidoctor.outputDir.path}/html5")
+            from file("build/docs")
+        }
+        def docDir = Boolean.valueOf(boothubTemplateSimpleKotlinReleaseBuild) ? 'releases' : 'snapshots'
+        if (pgType == 'init') {
+            into "."
+        } else if (pgType == 'list') {
+            into "."
+            preserve {
+                include '**'
+                exclude "releases.md"
+            }
+        } else if (pgType == 'version') {
+            gitPublishPush.enabled = (docDir != 'snapshots')
+            into "$docDir/$boothubTemplateSimpleKotlinVersion"
+
+            preserve {
+                include '**'
+                exclude "$docDir/$boothubTemplateSimpleKotlinVersion"
+            }
+        } else {
+            into "$docDir/latest"
+
+            preserve {
+                include '**'
+                exclude "$docDir/latest"
+            }
+        }
+    }
+}
+
+task checkInfoVersion {
+    doLast {
+        def props = new Yaml().load(new FileInputStream("$projectDir/skeleton/info.yml"))
+        def infoVersion = props?.version?.major + '.' + props?.version?.minor + '.' + props?.version?.patch
+        def prjVersion = boothubTemplateSimpleKotlinVersionMajor + '.' + boothubTemplateSimpleKotlinVersionMinor + '.' + boothubTemplateSimpleKotlinVersionPatch
+        if(infoVersion != prjVersion) throw new InvalidUserDataException("Different versions found in gradle.properties ($prjVersion) and info.yml ($infoVersion).")
+    }
+}
+processResources.dependsOn checkInfoVersion
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

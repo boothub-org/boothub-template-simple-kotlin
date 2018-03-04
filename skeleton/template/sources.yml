@@ -1,0 +1,14 @@
+--- !!org.boothub.context.SourceContext
+artifact: {{appModule.artifact}}
+fileContexts:
+    - !!org.boothub.context.SourceFileContext
+      fileName: KotlinMain.kt
+      targetBaseDir: src/main/kotlin
+      targetPackage: {{appModule.basePackage}}
+      targetFileClass: {{appMainClass}}
+
+    - !!org.boothub.context.SourceFileContext
+      fileName: KotlinTest.kt
+      targetBaseDir: src/test/kotlin
+      targetPackage: {{appModule.basePackage}}
+      targetFileClass: {{appModule.artifactAsClassName}}Test

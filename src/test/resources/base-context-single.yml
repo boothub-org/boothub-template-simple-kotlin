@@ -1,0 +1,25 @@
+--- !!org.boothub.simplekotlin.context.MainContext
+license: Apache-2.0
+group: org.bizarre-soft
+
+versionMajor: 2
+versionMinor: 3
+versionPatch: 4
+releaseBuild: false
+
+ghUserId: &maintainerId jsmith
+ghProjectOwner: *maintainerId
+ghProjectId: weirdo
+projectName: The Weirdo Project
+
+modules:
+  - !!org.boothub.context.StandardModuleContext &mod-weird-app
+    artifact: weird-app
+    basePackage: org.bizarre_soft.weird_app
+
+appModule: *mod-weird-app
+appMainClass: WeirdAppMain
+
+developers:
+  - id: *maintainerId
+    name: John Smith

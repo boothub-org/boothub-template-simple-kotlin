@@ -1,0 +1,21 @@
+id: org.boothub.simple-kotlin
+name: Simple Kotlin
+caption: A Gradle-based Kotlin project with a main class and a test class.
+
+version:
+  major: 0
+  minor: 1
+  patch: 0
+
+minimumRequiredBootHub:
+  major: 1
+  minor: 0
+  patch: 0
+
+# homepage: http://example.org
+
+# authors:
+#  - Jane Doe
+
+# tags:
+#  - java
