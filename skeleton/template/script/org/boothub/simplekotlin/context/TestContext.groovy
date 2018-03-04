@@ -22,14 +22,14 @@ import org.boothub.context.TextIOConfigurator
 import org.beryx.textio.TextIO
 
 @SelfType(ProjectContext)
-@ConfiguredBy(InfoContext.Configurator)
-trait InfoContext {
+@ConfiguredBy(TestContext.Configurator)
+trait TestContext {
     String myExampleProperty = 'dummy'
 
     static class Configurator extends TextIOConfigurator  {
         @Override
         void configureWithTextIO(ProjectContext context, TextIO textIO) {
-            def ctx = context as InfoContext
+            def ctx = context as TestContext
             ctx.myExampleProperty = textIO.newStringInputReader()
                     .withDefaultValue(ctx.myExampleProperty)
                     .read('myExampleProperty')

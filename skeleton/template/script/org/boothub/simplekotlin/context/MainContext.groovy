@@ -15,5 +15,5 @@
  */
 package org.boothub.simplekotlin.context
 
-class MainContext extends org.boothub.context.StandardProjectContext.AppSingle implements InfoContext {
+class MainContext extends org.boothub.context.StandardProjectContext.AppSingle implements TestContext {
 }
