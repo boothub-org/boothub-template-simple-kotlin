@@ -56,7 +56,11 @@ apply {
   plugin("org.jetbrains.dokka")
   plugin("com.github.hierynomus.license")
 }
-
+{{~#ifb (or useJUnit5 useSpek)}}
+val test by tasks.getting(Test::class) {
+    useJUnitPlatform()
+}
+{{~/ifb}}
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -80,10 +84,34 @@ tasks.withType<Sign> {
 }
 
 dependencies {
+  compile(kotlin("reflect"))
   compile(kotlin("stdlib"))
   compile("org.slf4j:slf4j-api:1.7.21")
   runtime ("ch.qos.logback:logback-classic:1.1.7")
+  {{~#if useJUnit4}}
   testCompile("junit:junit:4.12")
+  {{~/if}}
+  {{~#if useJUni5}}
+  testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
+  testCompile("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+  testCompile("org.junit.jupiter:junit-jupiter-params:5.1.0")
+  {{~/if}}
+  {{~#if useKotlinTest}}
+  testCompile("io.kotlintest:kotlintest:2.0.7") {
+      exclude(module = "kotlin-reflect")
+  }
+  {{~/if}}
+  {{~#if useSpek}}
+  testCompile("com.winterbe:expekt:0.5.0")
+  testCompile("org.jetbrains.spek:spek-api:1.1.5"){
+      exclude("org.jetbrains.kotlin")
+  }
+  testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5") {
+      exclude("org.junit.platform")
+      exclude("org.jetbrains.kotlin")
+  }
+  testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+  {{~/if}}
   testCompile("ch.qos.logback:logback-classic:1.1.7")
 }
 
