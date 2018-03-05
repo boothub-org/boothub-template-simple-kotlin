@@ -91,7 +91,7 @@ dependencies {
   {{~#if useJUnit4}}
   testCompile("junit:junit:4.12")
   {{~/if}}
-  {{~#if useJUni5}}
+  {{~#if useJUnit5}}
   testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
   testCompile("org.junit.jupiter:junit-jupiter-engine:5.1.0")
   testCompile("org.junit.jupiter:junit-jupiter-params:5.1.0")
