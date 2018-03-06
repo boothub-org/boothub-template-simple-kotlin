@@ -6,7 +6,9 @@ import groovy.util.Node
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.gradle.api.Task
+{{~#if checkLicenseHeader}}
 import nl.javadude.gradle.plugins.license.LicenseExtension
+{{~/if}}
 import org.gradle.jvm.tasks.Jar
 import org.gradle.plugins.signing.Sign
 import java.time.ZonedDateTime
@@ -31,7 +33,9 @@ plugins {
     kotlin("jvm") version "1.2.21"
     id ("maven-publish")
     id ("com.github.ethankhall.semantic-versioning") version "1.1.0"
+    {{~#if checkLicenseHeader}}
     id ("com.github.hierynomus.license") version "0.12.1"
+    {{~/if}}
     id ("com.jfrog.bintray") version "1.7.2"
     id ("net.saliman.properties") version "1.4.6"
 }
@@ -54,7 +58,9 @@ apply {
   plugin("idea")
   plugin("signing")
   plugin("org.jetbrains.dokka")
+  {{~#if checkLicenseHeader}}
   plugin("com.github.hierynomus.license")
+  {{~/if}}
 }
 {{~#ifb (or useJUnit5 useSpek)}}
 val test by tasks.getting(Test::class) {
@@ -71,12 +77,14 @@ version = {{prjId}}Version
 tasks.withType<KotlinCompile> {
   kotlinOptions.jvmTarget = "1.8"
 }
+{{~#if checkLicenseHeader}}
 
 license {
     header = file("license-header.txt")
     skipExistingHeaders = true
     ignoreFailures = false
 }
+{{~/if}}
 
 tasks.withType<Sign> {
     sign(configurations.archives)

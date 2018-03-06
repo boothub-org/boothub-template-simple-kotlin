@@ -37,7 +37,7 @@ class BoothubTemplateSimpleKotlinSpec extends Specification {
 
 
     @Unroll
-    def "should create a valid artifact using #flags"() {
+    def "should create a valid artifact using {#flags}"() {
         when:
         def artifacts = new GradleTemplateBuilder(TEMPLATE_DIR)
                 .withContext(context)
@@ -55,7 +55,7 @@ class BoothubTemplateSimpleKotlinSpec extends Specification {
     }
 
     @Unroll
-    def "should create a valid application using #flags"() {
+    def "should create a valid application using {#flags}"() {
         expect:
         new OutputChecker(TEMPLATE_DIR, context)
                 .checkOutput("Hello from $context.appMainClass!")
@@ -73,7 +73,7 @@ class BoothubTemplateSimpleKotlinSpec extends Specification {
 
     private static Collection<ProjectContext> getContexts() {
         def builder = new ProjectContextStreamBuilder({new Initializr(TEMPLATE_DIR).createContext(CONTEXT_SINGLE)})
-                .withFlagNames('testFramework')
+                .withFlagNames('testFramework', 'checkLicenseHeader')
         builder.stream().collect(Collectors.toList())
     }
 
