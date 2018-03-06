@@ -73,7 +73,7 @@ class BoothubTemplateSimpleKotlinSpec extends Specification {
 
     private static Collection<ProjectContext> getContexts() {
         def builder = new ProjectContextStreamBuilder({new Initializr(TEMPLATE_DIR).createContext(CONTEXT_SINGLE)})
-                .withFlagNames('testFramework', 'checkLicenseHeader')
+                .withFlagNames('testFramework', 'checkLicenseHeader', 'supportBintray')
         builder.stream().collect(Collectors.toList())
     }
 

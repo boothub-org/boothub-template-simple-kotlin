@@ -2,4 +2,6 @@
 filePath: ___gitignore
 targetPath: .gitignore
 
-
+--- !!org.boothub.context.FileContext
+filePath: gradle-local.template.properties
+enabled: {{supportBintray}}

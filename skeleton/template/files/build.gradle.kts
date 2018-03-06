@@ -10,10 +10,12 @@ import org.gradle.api.Task
 import nl.javadude.gradle.plugins.license.LicenseExtension
 {{~/if}}
 import org.gradle.jvm.tasks.Jar
+{{~#if supportBintray}}
 import org.gradle.plugins.signing.Sign
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.swing.*
+{{~/if}}
 
 buildscript {
     repositories {
@@ -31,13 +33,15 @@ plugins {
     idea
     eclipse
     kotlin("jvm") version "1.2.21"
+    {{~#if supportBintray}}
     id ("maven-publish")
+    id ("com.jfrog.bintray") version "1.7.2"
+    id ("net.saliman.properties") version "1.4.6"
+    {{~/if}}
     id ("com.github.ethankhall.semantic-versioning") version "1.1.0"
     {{~#if checkLicenseHeader}}
     id ("com.github.hierynomus.license") version "0.12.1"
     {{~/if}}
-    id ("com.jfrog.bintray") version "1.7.2"
-    id ("net.saliman.properties") version "1.4.6"
 }
 
 val {{prjId}}VersionMajor by project
@@ -56,7 +60,9 @@ apply {
   plugin("application")
   plugin("eclipse")
   plugin("idea")
+  {{~#if supportBintray}}
   plugin("signing")
+  {{~/if}}
   plugin("org.jetbrains.dokka")
   {{~#if checkLicenseHeader}}
   plugin("com.github.hierynomus.license")
@@ -85,11 +91,13 @@ license {
     ignoreFailures = false
 }
 {{~/if}}
+{{~#if supportBintray}}
 
 tasks.withType<Sign> {
     sign(configurations.archives)
     onlyIf { gradle.taskGraph.allTasks.any{task: Task -> isPublishTask(task)} }
 }
+{{~/if}}
 
 dependencies {
   compile(kotlin("reflect"))
@@ -153,6 +161,7 @@ artifacts {
     add("archives", sourcesJar)
     add("archives", dokkaJar)
 }
+{{~#if supportBintray}}
 
 publishing {
     (publications) {
@@ -245,6 +254,7 @@ bintray {
         }
     }
 }
+{{~/if}}
 
 fun propertyOrElse(propName: String, defVal: String) : String = if(project.hasProperty(propName)) (project.property(propName) as String) else defVal
 fun sourceSets(name: String) = the<JavaPluginConvention>().sourceSets.getByName(name)
