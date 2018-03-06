@@ -23,7 +23,6 @@
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#getting_started">Getting Started</a></li>
 <li><a href="#user_guide">User Guide</a>
 <ul class="sectlevel2">
 <li><a href="#idea">IntelliJ Idea</a></li>
@@ -70,13 +69,31 @@ Click on the icon below to read the license file:</p>
 <p>The Simple-Kotlin BootHub template allows you to create a Java project with a main class and a JUnit test class.</p>
 </div>
 <div class="paragraph">
-<p>It provides a Gradle build file that adds support for versioning, checking license headers, jar signing and publishing to JCenter and Maven Central.</p>
+<p>It provides a Gradle build file that adds support for:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p>versioning</p>
+</li>
+<li>
+<p>checking license headers</p>
+</li>
+<li>
+<p>testing with <a href="https://junit.org/junit4">JUnit 4</a>,
+<a href="https://junit.org/junit5">JUnit 5</a>,
+<a href="https://github.com/kotlintest/kotlintest">kotlin.test</a>
+or <a href="http://spekframework.org">Spek</a></p>
+</li>
+<li>
+<p>jar signing</p>
+</li>
+<li>
+<p>publishing to JCenter and Maven Central
+= Getting Started</p>
+</li>
+</ul>
 </div>
-</div>
-<div class="sect1">
-<h2 id="getting_started">Getting Started</h2>
-<div class="sectionbody">
 <div class="paragraph">
 <p>You can generate a project skeleton based on the Simple-Kotlin template by using the
 <a href="https://boothub.org/app#/home/true/https%3A%2F%2Fgithub.com%2Fboothub-org%2Fboothub-template-simple-kotlin%2Freleases%2Fdownload%2Fv0.1.1-SNAPSHOT%2Fsimple-kotlin-0.1.1-SNAPSHOT.zip" class="external" target="_blank">BootHub GUI</a>
@@ -105,7 +122,7 @@ Maven groupId: <span class="yellow">org.myproject</span>
 
 Artifact ID [my-project]: ​
 Base package [org.myproject]: ​
-Application main class name [MyProjectMain]: ​MyApp
+Application main class name [MyProjectMain]: <span class="yellow">​MyApp</span>
 
 </pre>
 </div>
@@ -113,7 +130,7 @@ Application main class name [MyProjectMain]: ​MyApp
 
 </pre>
 <div class="paragraph">
-<p>The final step is to provide information about the project developers:</p>
+<p>The next step is to provide information about the project developers:</p>
 </div>
 <div class="black-background">
 <pre class="lime" style="margin-left: 20px;">
@@ -123,6 +140,21 @@ Developer ID [jsmith]:
 Developer name [John Smith]:
 Developer email (optional):
 More developers? (Y/N) [N]:
+
+</pre>
+</div>
+<div class="paragraph">
+<p>Finally, you need to choose your preferred test framework:</p>
+</div>
+<div class="black-background">
+<pre class="lime" style="margin-left: 20px;">
+
+Test Framework:
+  1: JUnit 4
+  2: JUnit 5
+* 3: kotlin.test
+  4: Spek
+Enter your choice: ​<span class="yellow">​4</span>
 
 </pre>
 </div>
