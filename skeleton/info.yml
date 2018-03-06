@@ -4,8 +4,8 @@ caption: A Gradle-based Kotlin project with a main class and a test class.
 
 version:
   major: 0
-  minor: 1
-  patch: 1
+  minor: 2
+  patch: 0
 
 minimumRequiredBootHub:
   major: 1
