@@ -1,5 +1,7 @@
 ### Getting started
 
+{{~def 'prjId' (asJavaId ghProjectId)~}}
+
 {{#if ghApiUsed}}
 ```
 git clone https://github.com/{{ghProjectOwner}}/{{ghProjectId}}.git
