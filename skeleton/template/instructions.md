@@ -12,14 +12,22 @@ Download the generated zip file and unpack it. In the {{ghProjectId}} directory 
 
 &#8226; *On Linux or Mac OS:*
 ```
-./gradlew build
+./gradlew installDist
+cd build/install/{{prjId}}/bin
+./{{prjId}}
 ```
 
 &#8226; *On Windows:*
 ```
-gradlew build
+gradlew installDist
+cd build\install\ {{~prjId}}\bin
+{{prjId}}
 ```
 
+The following text should appear on your screen:
 
+```
+Hello from {{appMainClass}}!
+```
 
-See the template documentation for more info.
+See the [template documentation](http://simple-kotlin.boothub.org) for more info.

@@ -10,4 +10,13 @@ image::license.png[role="thumb" link="{blob-root}/LICENSE"]
 
 The Simple-Kotlin BootHub template allows you to create a Java project with a main class and a JUnit test class.
 
-It provides a Gradle build file that adds support for versioning, checking license headers, jar signing and publishing to JCenter and Maven Central.
+It provides a Gradle build file that adds support for:
+
+- versioning
+- checking license headers
+- testing with https://junit.org/junit4[JUnit 4],
+   https://junit.org/junit5[JUnit 5],
+   https://github.com/kotlintest/kotlintest[kotlin.test]
+   or http://spekframework.org[Spek]
+- jar signing
+- publishing to JCenter and Maven Central

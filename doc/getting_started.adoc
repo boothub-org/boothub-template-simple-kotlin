@@ -30,7 +30,7 @@ Then you need to configure the artifact ID, the base package and the name of the
 
 Artifact ID [my-project]: ​
 Base package [org.myproject]: ​
-Application main class name [MyProjectMain]: ​MyApp
+Application main class name [MyProjectMain]: <span class="yellow">​MyApp</span>
 
 </pre>
 </div>
@@ -39,7 +39,7 @@ Application main class name [MyProjectMain]: ​MyApp
 </pre>
 ++++
 
-The final step is to provide information about the project developers:
+The next step is to provide information about the project developers:
 
 ++++
 <div class="black-background">
@@ -50,6 +50,23 @@ Developer ID [jsmith]:
 Developer name [John Smith]:
 Developer email (optional):
 More developers? (Y/N) [N]:
+
+</pre>
+</div>
+++++
+
+Finally, you need to choose your preferred test framework:
+
+++++
+<div class="black-background">
+<pre class="lime" style="margin-left: 20px;">
+
+Test Framework:
+  1: JUnit 4
+  2: JUnit 5
+* 3: kotlin.test
+  4: Spek
+Enter your choice: ​<span class="yellow">​4</span>
 
 </pre>
 </div>
