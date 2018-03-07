@@ -52,21 +52,21 @@ val releaseBuild = {{prjId}}ReleaseBuild.toString().toBoolean()
 val {{prjId}}Version = "" + {{prjId}}VersionMajor + "." + {{prjId}}VersionMinor + "." + {{prjId}}VersionPatch + (if(releaseBuild) "" else "-SNAPSHOT")
 
 repositories {
-  jcenter()
-  mavenCentral()
+    jcenter()
+    mavenCentral()
 }
 
 apply {
-  plugin("application")
-  plugin("eclipse")
-  plugin("idea")
-  {{~#if supportBintray}}
-  plugin("signing")
-  {{~/if}}
-  plugin("org.jetbrains.dokka")
-  {{~#if checkLicenseHeader}}
-  plugin("com.github.hierynomus.license")
-  {{~/if}}
+    plugin("application")
+    plugin("eclipse")
+    plugin("idea")
+    {{~#if supportBintray}}
+    plugin("signing")
+    {{~/if}}
+    plugin("org.jetbrains.dokka")
+    {{~#if checkLicenseHeader}}
+    plugin("com.github.hierynomus.license")
+    {{~/if}}
 }
 {{~#ifb (or useJUnit5 useSpek)}}
 val test by tasks.getting(Test::class) {
@@ -81,7 +81,7 @@ group = "{{group}}"
 version = {{prjId}}Version
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = "1.8"
 }
 {{~#if checkLicenseHeader}}
 
@@ -100,35 +100,35 @@ tasks.withType<Sign> {
 {{~/if}}
 
 dependencies {
-  compile(kotlin("reflect"))
-  compile(kotlin("stdlib"))
-  compile("org.slf4j:slf4j-api:1.7.21")
-  runtime ("ch.qos.logback:logback-classic:1.1.7")
-  {{~#if useJUnit4}}
-  testCompile("junit:junit:4.12")
-  {{~/if}}
-  {{~#if useJUnit5}}
-  testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
-  testCompile("org.junit.jupiter:junit-jupiter-engine:5.1.0")
-  testCompile("org.junit.jupiter:junit-jupiter-params:5.1.0")
-  {{~/if}}
-  {{~#if useKotlinTest}}
-  testCompile("io.kotlintest:kotlintest:2.0.7") {
-      exclude(module = "kotlin-reflect")
-  }
-  {{~/if}}
-  {{~#if useSpek}}
-  testCompile("com.winterbe:expekt:0.5.0")
-  testCompile("org.jetbrains.spek:spek-api:1.1.5"){
-      exclude("org.jetbrains.kotlin")
-  }
-  testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5") {
-      exclude("org.junit.platform")
-      exclude("org.jetbrains.kotlin")
-  }
-  testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
-  {{~/if}}
-  testCompile("ch.qos.logback:logback-classic:1.1.7")
+    compile(kotlin("reflect"))
+    compile(kotlin("stdlib"))
+    compile("org.slf4j:slf4j-api:1.7.21")
+    runtime ("ch.qos.logback:logback-classic:1.1.7")
+    {{~#if useJUnit4}}
+    testCompile("junit:junit:4.12")
+    {{~/if}}
+    {{~#if useJUnit5}}
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0")
+    testCompile("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+    testCompile("org.junit.jupiter:junit-jupiter-params:5.1.0")
+    {{~/if}}
+    {{~#if useKotlinTest}}
+    testCompile("io.kotlintest:kotlintest:2.0.7") {
+        exclude(module = "kotlin-reflect")
+    }
+    {{~/if}}
+    {{~#if useSpek}}
+    testCompile("com.winterbe:expekt:0.5.0")
+    testCompile("org.jetbrains.spek:spek-api:1.1.5"){
+        exclude("org.jetbrains.kotlin")
+    }
+    testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5") {
+        exclude("org.junit.platform")
+        exclude("org.jetbrains.kotlin")
+    }
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+    {{~/if}}
+    testCompile("ch.qos.logback:logback-classic:1.1.7")
 }
 
 tasks.withType<Jar> {
@@ -217,7 +217,7 @@ fun readPasswordFromConsole(title: String, prompt: String) : String{
 }
 
 fun isPublishTask(task: Task): Boolean {
-  return task.name.startsWith("publish")
+    return task.name.startsWith("publish")
 }
 
 gradle.taskGraph.whenReady {
