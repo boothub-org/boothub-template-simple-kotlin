@@ -2,7 +2,6 @@
 {{~#def 'githubProjectUrl'}}https://github.com/{{ghProjectOwner}}/{{ghProjectId}}{{/def~}}
 {{~#def 'githubRepoUrl'}}{{githubProjectUrl}}.git{{/def~}}
 
-import groovy.util.Node
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.gradle.api.Task
@@ -11,28 +10,19 @@ import nl.javadude.gradle.plugins.license.LicenseExtension
 {{~/if}}
 import org.gradle.jvm.tasks.Jar
 {{~#if supportBintray}}
+import groovy.util.Node
 import org.gradle.plugins.signing.Sign
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import javax.swing.*
 {{~/if}}
 
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-    }
-
-    dependencies {
-        classpath("org.jetbrains.dokka:dokka-gradle-plugin:0.9.13")
-    }
-}
-
 plugins {
     application
     idea
     eclipse
-    kotlin("jvm") version "1.2.21"
+    kotlin("jvm") version "1.2.30"
+    id("org.jetbrains.dokka") version "0.9.16"
     {{~#if supportBintray}}
     id ("maven-publish")
     id ("com.jfrog.bintray") version "1.7.2"
@@ -161,8 +151,8 @@ artifacts {
     add("archives", sourcesJar)
     add("archives", dokkaJar)
 }
-{{~#if supportBintray}}
 
+{{~#if supportBintray}}
 publishing {
     (publications) {
         "{{prjId}}".invoke(MavenPublication::class) {
@@ -254,7 +244,7 @@ bintray {
         }
     }
 }
-{{~/if}}
 
 fun propertyOrElse(propName: String, defVal: String) : String = if(project.hasProperty(propName)) (project.property(propName) as String) else defVal
+{{~/if}}
 fun sourceSets(name: String) = the<JavaPluginConvention>().sourceSets.getByName(name)
