@@ -103,9 +103,7 @@ dependencies {
     testCompile("org.junit.jupiter:junit-jupiter-params:5.1.0")
     {{~/if}}
     {{~#if useKotlinTest}}
-    testCompile("io.kotlintest:kotlintest:2.0.7") {
-        exclude(module = "kotlin-reflect")
-    }
+    testCompile("io.kotlintest:kotlintest:2.0.7")
     {{~/if}}
     {{~#if useSpek}}
     testCompile("com.winterbe:expekt:0.5.0")
