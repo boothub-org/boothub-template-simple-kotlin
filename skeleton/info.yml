@@ -3,9 +3,9 @@ name: Simple Kotlin
 caption: A Gradle-based Kotlin project with a main class and a test class.
 
 version:
-  major: 0
-  minor: 2
-  patch: 2
+  major: 1
+  minor: 0
+  patch: 0
 
 minimumRequiredBootHub:
   major: 1
