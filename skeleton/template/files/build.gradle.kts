@@ -34,10 +34,10 @@ plugins {
     {{~/if}}
 }
 
-val {{prjId}}VersionMajor by project
-val {{prjId}}VersionMinor by project
-val {{prjId}}VersionPatch by project
-val {{prjId}}ReleaseBuild by project
+val {{prjId}}VersionMajor: String by project
+val {{prjId}}VersionMinor: String by project
+val {{prjId}}VersionPatch: String by project
+val {{prjId}}ReleaseBuild: String by project
 val releaseBuild = {{prjId}}ReleaseBuild.toString().toBoolean()
 val {{prjId}}Version = "" + {{prjId}}VersionMajor + "." + {{prjId}}VersionMinor + "." + {{prjId}}VersionPatch + (if(releaseBuild) "" else "-SNAPSHOT")
 
