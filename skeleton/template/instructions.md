@@ -15,15 +15,15 @@ Download the generated zip file and unpack it. In the {{ghProjectId}} directory 
 &#8226; *On Linux or Mac OS:*
 ```
 ./gradlew installDist
-cd build/install/{{prjId}}/bin
-./{{prjId}}
+cd build/install/{{ghProjectId}}/bin
+./{{ghProjectId}}
 ```
 
 &#8226; *On Windows:*
 ```
 gradlew installDist
-cd build\install\ {{~prjId}}\bin
-{{prjId}}
+cd build\install\ {{~ghProjectId}}\bin
+{{ghProjectId}}
 ```
 
 The following text should appear on your screen:
