@@ -25,7 +25,7 @@ plugins {
     id("org.jetbrains.dokka") version "0.9.16"
     {{~#if supportBintray}}
     id ("maven-publish")
-    id ("com.jfrog.bintray") version "1.7.2"
+    id ("com.jfrog.bintray") version "1.8.1"
     id ("net.saliman.properties") version "1.4.6"
     {{~/if}}
     id ("com.github.ethankhall.semantic-versioning") version "1.1.0"
